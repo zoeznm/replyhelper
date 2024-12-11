@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Chatbot</title>
+</head>
+<body>
+  <h1>AI Chatbot</h1>
+  <form id="chat-form">
+    <label for="question">질문을 입력하세요:</label>
+    <input type="text" id="question" name="question" required>
+    <button type="submit">질문하기</button>
+  </form>
+  <div id="response"></div>
+
+  <script>
+    document.getElementById('chat-form').addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const question = document.getElementById('question').value;
+
+      const response = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ question }),
+      });
+
+      const result = await response.json();
+      document.getElementById('response').textContent = result.result;
+    });
+  </script>
+</body>
+</html>
